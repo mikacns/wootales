@@ -1,0 +1,28 @@
+// Displays a notice for International customers on the checkout page 
+
+add_action( 'woocommerce_before_checkout_billing_form', 'sf_international_shipping_notice' );
+function sf_international_shipping_notice() {
+    echo '<div class="international-shipping-notice woocommerce-info" style="display:none; color:red"><b style="color:red;">Please note:</b> Due to COVID-19 outbreak and limitation in services, <b>international delivery time is longer than usual</b> and there could be a significant delay in receiving your package - <b>possibly more than 4 weeks</b>. Please track your package using tracking number once you receive it and review our updates <a href="https://lostempireherbs.com/leh-current-operations/" target="_blank"><b>here</b></a>. </div>';
+}
+
+add_action( 'woocommerce_after_checkout_form', 'sf_show_international_shipping_notice' );
+function sf_show_international_shipping_notice(){ ?>
+
+    <script>
+        jQuery(document).ready(function($){
+        var countryCode = ["AU", "AT", "Any_other_country_code_you_want_to_include"];
+
+        $('select#billing_country').change(function(){
+            selectedCountries = $(this).val();
+    
+        if (countryCode.some(r => selectedCountries.includes(r))){
+        $('.international-shipping-notice').show();
+        } else {
+
+        $('.international-shipping-notice').hide();
+        }
+    });
+});
+</script>
+
+}
